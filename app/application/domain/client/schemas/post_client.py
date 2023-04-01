@@ -1,0 +1,8 @@
+from fastapi_camelcase import CamelModel
+
+
+class PostClientSchema(CamelModel):
+    full_name: str
+    email: str
+    password: str
+    is_active: bool = True
