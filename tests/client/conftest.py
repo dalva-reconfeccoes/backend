@@ -14,6 +14,7 @@ def client_fake_dict():
         "full_name": faker.name(),
         "email": faker.email(),
         "password": faker.password(),
+        "is_juridical": False,
     }
 
 
@@ -23,7 +24,7 @@ def client_post_fake_dict():
         "full_name": faker.name(),
         "email": faker.email(),
         "password": faker.password(),
-        "is_active": True,
+        "is_juridical": True,
     }
 
 
@@ -34,6 +35,7 @@ def client_put_fake_dict():
         "email": faker.email(),
         "password": faker.password(),
         "is_active": False,
+        "is_juridical": True,
     }
 
 

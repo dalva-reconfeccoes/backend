@@ -1,7 +1,7 @@
 import pytest
 from fastapi import status
 
-END_POINT = "/clients/"
+END_POINT = "/api/clients/"
 
 
 def test_router_get_clients_should_be_return_200_when_get_all_clients(

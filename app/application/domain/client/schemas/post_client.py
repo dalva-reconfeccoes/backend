@@ -5,4 +5,4 @@ class PostClientSchema(CamelModel):
     full_name: str
     email: str
     password: str
-    is_active: bool = True
+    is_juridical: bool

@@ -9,6 +9,7 @@ class GetClientSchema(CamelModel):
     uuid: str
     email: str
     full_name: str
+    is_juridical: bool
     is_active: bool = True
     created_at: Optional[datetime] = None
     updated_at: Optional[datetime] = None

@@ -13,6 +13,6 @@ async def init_routers(app: FastAPI):
     from app.application.routes import healthcheck_router
 
     app.include_router(healthcheck_router.router)
-    app.include_router(client_router.router, prefix="/clients", tags=["Client"])
+    app.include_router(client_router.router, prefix="/api/clients", tags=["Client"])
 
     add_pagination(app)

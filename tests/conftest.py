@@ -50,9 +50,9 @@ def test_app_with_db():
 
 @pytest.fixture(scope="module")
 def access_token(test_app_with_db):
-    test_app_with_db.post("/clients/create-admin")
+    test_app_with_db.post("/api/clients/create-admin")
     response = test_app_with_db.post(
-        "/clients/login",
+        "/api/clients/login",
         json={"email": setting.EMAIL_ADMIN, "password": setting.PASSWORD_ADMIN},
     )
 

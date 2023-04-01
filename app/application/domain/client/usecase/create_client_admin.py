@@ -20,6 +20,7 @@ class CreateClientAdminUseCase:
                 full_name=config("NAME_ADMIN"),
                 password=pbkdf2_sha256.hash(config("PASSWORD_ADMIN")),
                 is_active=True,
+                is_juridical=False,
             ).dict()
         return None
 

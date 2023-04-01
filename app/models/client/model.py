@@ -9,6 +9,7 @@ class Client(BaseModel):
     full_name = CharField(max_length=255)
     email = CharField(max_length=100, unique=True)
     password = CharField(max_length=100)
+    is_juridical = BooleanField(default=False)
     is_active = BooleanField(default=True)
 
     def __str__(self):
