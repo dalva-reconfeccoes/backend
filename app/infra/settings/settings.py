@@ -31,6 +31,7 @@ class Setting(BaseSettings):
     MODELS: List = [
         "aerich.models",
         "app.models.client",
+        "app.models.product",
     ]
 
 
