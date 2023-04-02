@@ -4,8 +4,6 @@ from app.models.base_model import BaseModel
 
 
 class Client(BaseModel):
-    id = IntField(pk=True)
-    uuid = CharField(max_length=32)
     full_name = CharField(max_length=255)
     email = CharField(max_length=100, unique=True)
     password = CharField(max_length=100)

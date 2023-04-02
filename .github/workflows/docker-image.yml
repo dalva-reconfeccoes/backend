@@ -1,0 +1,61 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches:
+      - "master"
+      - "develop"
+      - "release/**"
+    
+  pull_request:
+    branches:
+      - "master"
+      - "develop"
+      - "release/**"
+
+env:
+  BRANCH_NAME: ${{ github.ref_name }}
+  REGISTRY: ghcr.io
+  REGISTRY_USER: ${{ github.actor }}
+  REGISTRY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+  SERVICE_NAME: backend
+  
+jobs:
+  testing:
+    runs-on: ubuntu-latest
+    if: ${{ contains(fromJSON('["pull_request"]'), github.event_name) }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          python-version: "3.10.6"
+          cache: "pipenv"
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get install libgeos-dev
+          python -m pip install --upgrade pip
+          pip install pipenv
+          pipenv install --dev
+          cp dotenv_example .env
+
+      - name: Running tests
+        run: |
+          pipenv run pytest
+
+  build:
+    runs-on: ubuntu-latest
+    if: ${{ contains(fromJSON('["push"]'), github.event_name) }}
+    steps:
+      - uses: actions/checkout@v3 
+      - name: Login to a hosted registry  
+        uses: docker/login-action@v1
+        with:
+          registry: ${{env.REGISTRY}}
+          username: ${{env.REGISTRY_USER}}
+          password: ${{env.REGISTRY_PASSWORD}}  
+      
+      - name:  Build Docker image 
+        run: docker build . --tag ghcr.io/dalva-reconfeccoes/${SERVICE_NAME}-${BRANCH_NAME}:latest
+        
+      - name:  Push Docker image to registry
+        run: docker push ghcr.io/dalva-reconfeccoes/${SERVICE_NAME}-${BRANCH_NAME}:latest
