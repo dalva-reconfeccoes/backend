@@ -10,7 +10,7 @@ class Client(BaseModel):
     is_juridical = BooleanField(default=False)
     is_active = BooleanField(default=True)
     verification_code = CharField(min_length=6, max_length=6, null=True)
-    expiration_code_time = DatetimeField(null=True)
+    expiration_code_time = DatetimeField(null=True, use_tz=True)
     email_is_verified = BooleanField(default=False)
 
     def __str__(self):

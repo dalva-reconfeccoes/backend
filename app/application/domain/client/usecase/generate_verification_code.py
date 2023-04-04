@@ -12,7 +12,7 @@ from app.infra.database.repositories.client import repository
 from app.models.client import Client
 
 
-class GenerateVerificationCode:
+class GenerateVerificationCodeUseCase:
     def __init__(self, payload: FilterClientSchema):
         self._repository = repository.ClientRepository()
         self.__payload = payload
@@ -36,6 +36,7 @@ class GenerateVerificationCode:
         client.verification_code = code
         client.expiration_code_time = expiration
         await client.save()
+        print(client.expiration_code_time)
 
     async def execute(self) -> SimpleMessageSchema:
         await self.__validate_values_payload()

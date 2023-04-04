@@ -12,3 +12,5 @@ class MessagesEnum(str, Enum):
     EMAIL_ALREADY_EXIST = "Email already exists"
     PARAMETERS_NOT_FOUND = "Parameters filter not found for this request."
     VERIFICATION_SENT = "Verification code sent successfully"
+    EXPIRED_VERIFICATION_CODE = "Your Code has expired. Request to send a new code."
+    INVALID_VERIFICATION_CODE = "Code invalid."

@@ -1,7 +1,6 @@
 from loguru import logger
 
-from app.infra.database.db import (close_connection_database,
-                                   connect_to_database)
+from app.infra.database.db import close_connection_database, connect_to_database
 from app.infra.fast_api.bootstrap import create_app
 from app.infra.fast_api.routers import init_routers
 from app.infra.jwt.jwt import exception_jwt, init_jwt
@@ -20,12 +19,6 @@ async def startup_db():
 async def startup_routers():
     logger.info("Starting up routers...")
     await init_routers(app)
-
-
-@app.on_event("startup")
-async def startup_middlewares():
-    logger.info("Starting up middlewares...")
-    await init_middlewares(app)
 
 
 @app.on_event("startup")

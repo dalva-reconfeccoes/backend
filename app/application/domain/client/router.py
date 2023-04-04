@@ -11,8 +11,14 @@ from app.application.domain.client.schemas import (
     UpdateClientSchema,
 )
 from app.application.domain.client.schemas.filter_client import FilterClientSchema
+from app.application.domain.client.schemas.verification_code import (
+    VerificationCodeSchema,
+)
 from app.application.domain.client.usecase.generate_verification_code import (
-    GenerateVerificationCode,
+    GenerateVerificationCodeUseCase,
+)
+from app.application.domain.client.usecase.validate_verification_code import (
+    ValidateVerificationCodeUseCase,
 )
 from app.application.schemas.simple_message_schema import SimpleMessageSchema
 from app.infra.jwt.jwt_bearer import JWTBearer
@@ -105,4 +111,14 @@ async def create_admim():
 )
 async def email_verification(uuid: str = None, email: str = None):
     filter_schema = FilterClientSchema(uuid=uuid, email=email)
-    return await GenerateVerificationCode(filter_schema).execute()
+    return await GenerateVerificationCodeUseCase(filter_schema).execute()
+
+
+@router.post(
+    "/verify-email",
+    status_code=status.HTTP_200_OK,
+    description="This router is to verify client email with code.",
+    response_model=SimpleMessageSchema,
+)
+async def verify_email(payload: VerificationCodeSchema):
+    return await ValidateVerificationCodeUseCase(payload).execute()

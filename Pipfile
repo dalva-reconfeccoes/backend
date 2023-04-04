@@ -22,6 +22,7 @@ python-multipart = "*"
 mypy = "*"
 aiomysql = "*"
 httpx = "*"
+arrow = "*"
 
 [dev-packages]
 autoflake = "*"

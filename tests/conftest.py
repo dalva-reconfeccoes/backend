@@ -21,8 +21,8 @@ def get_settings_override():
 def test_app():
     app = create_app()
     app.dependency_overrides[get_settings] = get_settings_override()
+    init_middlewares(app)
     asyncio.run(init_routers(app))
-    asyncio.run(init_middlewares(app))
     asyncio.run(init_jwt())
     asyncio.run(connect_to_database())
 
@@ -40,8 +40,8 @@ def test_app_with_db():
         modules={"models": setting.MODELS},
         generate_schemas=True,
     )
+    init_middlewares(app)
     asyncio.run(init_routers(app))
-    asyncio.run(init_middlewares(app))
     asyncio.run(init_jwt())
     asyncio.run(connect_to_database())
     with TestClient(app) as test_client:

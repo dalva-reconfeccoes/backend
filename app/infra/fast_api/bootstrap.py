@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 
+from app.infra.middlewares.middlewares import init_middlewares
 from app.infra.settings import get_settings
 
 settings = get_settings()
@@ -13,5 +14,6 @@ def create_app() -> FastAPI:
         description=settings.APP_DESCRIPTION,
         root_path=settings.ROOT_PATH,
     )
+    init_middlewares(application)
 
     return application

@@ -1,6 +1,9 @@
+import arrow
+import pytz
+
 from app.application.enums.messages_enum import MessagesEnum
 from fastapi import HTTPException, status
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 import base64
 import hashlib
 import os
@@ -71,8 +74,9 @@ async def clean_none_values_dict(kargs: dict) -> dict:
 
 def generate_verification_code():
     code = uuid.uuid4().hex[:6].upper()
-    datetime_now = datetime.now()
+    datetime_now = pytz.UTC.localize(datetime.now())
     datetime_expiration = datetime_now + timedelta(minutes=5)
+    print(datetime_expiration.tzinfo)
     return code, datetime_expiration
 
 
@@ -90,3 +94,21 @@ def format_client_name(name):
     names = name.split()
     format_names = [f"{name[:1]}{name[1:].lower()}" for name in names]
     return " ".join(format_names)
+
+
+def valid_verification_code(
+    payload_code: str, user_code: str, date_expiration_code: datetime
+):
+    datetime_now = pytz.UTC.localize(datetime.now())
+    if datetime_now > date_expiration_code:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=MessagesEnum.EXPIRED_VERIFICATION_CODE.value,
+        )
+    elif payload_code != user_code:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail=MessagesEnum.INVALID_VERIFICATION_CODE.value,
+        )
+
+    return True

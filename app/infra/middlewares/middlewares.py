@@ -6,7 +6,7 @@ from app.infra.settings import get_settings
 settings = get_settings()
 
 
-async def init_middlewares(app: FastAPI):
+def init_middlewares(app: FastAPI):
     """
     This module initializes the middlewares from application
     :param app
