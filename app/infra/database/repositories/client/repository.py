@@ -11,4 +11,4 @@ class ClientRepository(BaseRepository):
         return await self.entity.get_or_none(email=email)
 
     async def get_or_none(self, **kwargs):
-        await self.entity.get_or_none(**kwargs)
+        return await self.entity.get_or_none(**kwargs)

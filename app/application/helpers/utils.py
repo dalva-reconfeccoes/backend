@@ -1,8 +1,11 @@
+from app.application.enums.messages_enum import MessagesEnum
+from fastapi import HTTPException, status
+from datetime import datetime, timedelta
 import base64
 import hashlib
 import os
 import re
-from datetime import datetime, timedelta
+import uuid
 
 
 def md5(value: str):
@@ -67,7 +70,23 @@ async def clean_none_values_dict(kargs: dict) -> dict:
 
 
 def generate_verification_code():
-    code = ""
+    code = uuid.uuid4().hex[:6].upper()
     datetime_now = datetime.now()
     datetime_expiration = datetime_now + timedelta(minutes=5)
     return code, datetime_expiration
+
+
+async def validate_values_payload(payload: dict):
+    clean_dict = await clean_none_values_dict(payload)
+    if len(clean_dict.keys()) == 0:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=MessagesEnum.PARAMETERS_NOT_FOUND,
+        )
+    return clean_dict
+
+
+def format_client_name(name):
+    names = name.split()
+    format_names = [f"{name[:1]}{name[1:].lower()}" for name in names]
+    return " ".join(format_names)

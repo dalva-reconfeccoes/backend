@@ -42,7 +42,7 @@ def test_router_get_client_should_be_return_200_when_post_client(
     test_app_with_db, client_created, access_token
 ):
     response = test_app_with_db.get(
-        f"{END_POINT}{client_created.get('id')}", headers=access_token
+        f"{END_POINT}{client_created.get('uuid')}", headers=access_token
     )
 
     assert response.status_code == status.HTTP_200_OK
@@ -54,7 +54,9 @@ def test_router_get_client_by_email_should_be_return_200_when_post_client(
     clients = test_app_with_db.get(END_POINT, headers=access_token)
     email = clients.json().get("items")[0].get("email")
 
-    response = test_app_with_db.get(f"{END_POINT}email/{email}", headers=access_token)
+    response = test_app_with_db.get(
+        f"{END_POINT}email/?email={email}", headers=access_token
+    )
 
     assert response.status_code == status.HTTP_200_OK
 

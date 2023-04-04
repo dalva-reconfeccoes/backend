@@ -6,12 +6,12 @@ from app.infra.database.repositories.client import repository
 
 
 class GetClientUseCase:
-    def __init__(self, id: int):
-        self._id = id
+    def __init__(self, uuid: str):
+        self._uuid = uuid
         self._repository = repository.ClientRepository()
 
     async def _validate(self):
-        client = await self._repository.get_by_id(self._id)
+        client = await self._repository.get_or_none(uuid=self._uuid)
         if not client:
             raise HTTPException(status_code=400, detail=MessagesEnum.CLIENT_NOT_FOUND)
         return client

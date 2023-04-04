@@ -35,14 +35,14 @@ async def get_clients():
 
 
 @router.get(
-    "/{id}",
+    "/{uuid}",
     description="Router to one client by id",
     response_model=GetClientSchema,
     status_code=status.HTTP_200_OK,
     dependencies=[Depends(JWTBearer())],
 )
-async def get_client(id: int):
-    return await usecase.GetClientUseCase(id).execute()
+async def get_client(uuid: str):
+    return await usecase.GetClientUseCase(uuid).execute()
 
 
 @router.post(
@@ -56,7 +56,7 @@ async def post_client(payload: PostClientSchema):
 
 
 @router.get(
-    "/email/{email}",
+    "/email/",
     description="This router is to get one client by email",
     status_code=status.HTTP_200_OK,
     response_model=GetClientSchema,
@@ -103,6 +103,6 @@ async def create_admim():
     description="This router is to send code to verify email.",
     response_model=SimpleMessageSchema,
 )
-async def email_verification(id: int = None, uuid: str = None, email: str = None):
-    filter_schema = FilterClientSchema(id=id, uuid=uuid, email=email)
+async def email_verification(uuid: str = None, email: str = None):
+    filter_schema = FilterClientSchema(uuid=uuid, email=email)
     return await GenerateVerificationCode(filter_schema).execute()
