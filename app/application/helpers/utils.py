@@ -76,7 +76,6 @@ def generate_verification_code():
     code = uuid.uuid4().hex[:6].upper()
     datetime_now = pytz.UTC.localize(datetime.now())
     datetime_expiration = datetime_now + timedelta(minutes=5)
-    print(datetime_expiration.tzinfo)
     return code, datetime_expiration
 
 
@@ -105,7 +104,7 @@ def valid_verification_code(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=MessagesEnum.EXPIRED_VERIFICATION_CODE.value,
         )
-    elif payload_code != user_code:
+    elif payload_code.upper() != user_code.upper():
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail=MessagesEnum.INVALID_VERIFICATION_CODE.value,

@@ -36,7 +36,6 @@ class GenerateVerificationCodeUseCase:
         client.verification_code = code
         client.expiration_code_time = expiration
         await client.save()
-        print(client.expiration_code_time)
 
     async def execute(self) -> SimpleMessageSchema:
         await self.__validate_values_payload()
