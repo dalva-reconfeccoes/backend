@@ -9,3 +9,6 @@ class ClientRepository(BaseRepository):
 
     async def get_by_email(self, email: str) -> [dict, None]:
         return await self.entity.get_or_none(email=email)
+
+    async def get_or_none(self, **kwargs):
+        await self.entity.get_or_none(**kwargs)

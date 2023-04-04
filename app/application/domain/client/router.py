@@ -10,6 +10,11 @@ from app.application.domain.client.schemas import (
     PostClientSchema,
     UpdateClientSchema,
 )
+from app.application.domain.client.schemas.filter_client import FilterClientSchema
+from app.application.domain.client.usecase.generate_verification_code import (
+    GenerateVerificationCode,
+)
+from app.application.schemas.simple_message_schema import SimpleMessageSchema
 from app.infra.jwt.jwt_bearer import JWTBearer
 from app.infra.settings import get_settings
 
@@ -90,3 +95,14 @@ async def login(payload: LoginClientSchema, Authorize: AuthJWT = Depends()):
 async def create_admim():
     await usecase.CreateClientAdminUseCase().execute()
     return {"message": "Admin client created"}
+
+
+@router.post(
+    "/email-verification",
+    status_code=status.HTTP_200_OK,
+    description="This router is to send code to verify email.",
+    response_model=SimpleMessageSchema,
+)
+async def email_verification(id: int = None, uuid: str = None, email: str = None):
+    filter_schema = FilterClientSchema(id=id, uuid=uuid, email=email)
+    return await GenerateVerificationCode(filter_schema).execute()

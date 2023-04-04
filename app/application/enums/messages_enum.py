@@ -10,3 +10,5 @@ class MessagesEnum(str, Enum):
     INVALID_PASSWORD = "Invalid password"
     CLIENT_NOT_UPDATED = "Client not updated"
     EMAIL_ALREADY_EXIST = "Email already exists"
+    PARAMETERS_NOT_FOUND = "Parameters filter not found for this request."
+    VERIFICATION_SENT = "Verification code sent successfully"
