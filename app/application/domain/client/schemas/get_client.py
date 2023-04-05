@@ -10,6 +10,7 @@ class GetClientSchema(CamelModel):
     email: str
     full_name: str
     is_juridical: bool
+    email_is_verified: bool
     is_active: bool = True
     created_at: Optional[datetime] = None
     updated_at: Optional[datetime] = None

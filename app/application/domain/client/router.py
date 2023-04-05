@@ -11,6 +11,9 @@ from app.application.domain.client.schemas import (
     UpdateClientSchema,
 )
 from app.application.domain.client.schemas.filter_client import FilterClientSchema
+from app.application.domain.client.schemas.send_verification_code import (
+    SendVerificationCodeSchema,
+)
 from app.application.domain.client.schemas.verification_code import (
     VerificationCodeSchema,
 )
@@ -109,9 +112,8 @@ async def create_admim():
     description="This router is to send code to verify email.",
     response_model=SimpleMessageSchema,
 )
-async def email_verification(uuid: str = None, email: str = None):
-    filter_schema = FilterClientSchema(uuid=uuid, email=email)
-    return await GenerateVerificationCodeUseCase(filter_schema).execute()
+async def email_verification(payload: SendVerificationCodeSchema):
+    return await GenerateVerificationCodeUseCase(payload).execute()
 
 
 @router.post(

@@ -1,5 +1,5 @@
 from uuid import uuid4
-
+from fastapi import status
 import pytest
 from faker import Factory
 
@@ -15,6 +15,7 @@ def client_fake_dict():
         "email": faker.email(),
         "password": faker.password(),
         "is_juridical": False,
+        "email_is_verified": False,
     }
 
 
@@ -45,3 +46,12 @@ def client_login_fake_dict():
         "email": faker.email(),
         "password": faker.password(),
     }
+
+
+@pytest.fixture(scope="module")
+def client_created(test_app_with_db, client_post_fake_dict, access_token):
+    response = test_app_with_db.post(
+        "/api/clients/", json=client_post_fake_dict, headers=access_token
+    )
+    assert response.status_code == status.HTTP_201_CREATED
+    return response.json()
