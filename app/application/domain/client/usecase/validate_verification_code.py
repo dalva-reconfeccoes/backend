@@ -1,5 +1,3 @@
-from fastapi import HTTPException, status
-
 from app.application.domain.client.schemas.verification_code import (
     VerificationCodeSchema,
 )
@@ -9,8 +7,6 @@ from app.application.helpers.utils import (
     valid_verification_code,
 )
 from app.application.schemas.simple_message_schema import SimpleMessageSchema
-from app.infra.database.repositories.client import repository
-from app.models.client import Client
 
 
 class ValidateVerificationCodeUseCase(BaseClientUseCase):
