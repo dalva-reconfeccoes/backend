@@ -11,6 +11,7 @@ from app.application.domain.client.schemas import (
     UpdateClientSchema,
 )
 from app.application.domain.client.schemas.filter_client import FilterClientSchema
+from app.application.domain.client.schemas.reset_password import ResetPasswordSchema
 from app.application.domain.client.schemas.send_verification_code import (
     SendVerificationCodeSchema,
 )
@@ -20,6 +21,7 @@ from app.application.domain.client.schemas.verification_code import (
 from app.application.domain.client.usecase.generate_verification_code import (
     GenerateVerificationCodeUseCase,
 )
+from app.application.domain.client.usecase.reset_password import ResetPasswordUseCase
 from app.application.domain.client.usecase.validate_verification_code import (
     ValidateVerificationCodeUseCase,
 )
@@ -51,7 +53,8 @@ async def get_clients():
     dependencies=[Depends(JWTBearer())],
 )
 async def get_client(uuid: str):
-    return await usecase.GetClientUseCase(uuid).execute()
+    payload = FilterClientSchema(uuid=uuid)
+    return await usecase.GetClientUseCase(payload).execute()
 
 
 @router.post(
@@ -72,7 +75,8 @@ async def post_client(payload: PostClientSchema):
     dependencies=[Depends(JWTBearer())],
 )
 async def get_client_by_email(email: str):
-    return await usecase.GetClientByEmailUseCase(email).execute()
+    payload = FilterClientSchema(email=email)
+    return await usecase.GetClientUseCase(payload).execute()
 
 
 @router.put(
@@ -107,7 +111,7 @@ async def create_admim():
 
 
 @router.post(
-    "/email-verification",
+    "/verification",
     status_code=status.HTTP_200_OK,
     description="This router is to send code to verify email.",
     response_model=SimpleMessageSchema,
@@ -117,10 +121,20 @@ async def email_verification(payload: SendVerificationCodeSchema):
 
 
 @router.post(
-    "/verify-email",
+    "/verify",
     status_code=status.HTTP_200_OK,
     description="This router is to verify client email with code.",
     response_model=SimpleMessageSchema,
 )
 async def verify_email(payload: VerificationCodeSchema):
     return await ValidateVerificationCodeUseCase(payload).execute()
+
+
+@router.post(
+    "/reset-password",
+    status_code=status.HTTP_200_OK,
+    description="This router is to reset client password with valid email.",
+    response_model=SimpleMessageSchema,
+)
+async def reset_password(payload: ResetPasswordSchema):
+    return await ResetPasswordUseCase(payload).execute()

@@ -11,3 +11,15 @@ services:
       - ../.docker-volumes/postgresql:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+
+  service:
+    build: ./
+    environment:
+      - DB_URL=mysql://admin:admin@db:3306/dalvare
+      - TESTING=False
+    ports:
+      - 8000:8000
+    volumes:
+      - ./:/code
+    depends_on:
+      - db

@@ -79,7 +79,7 @@ def generate_verification_code():
     return code, datetime_expiration
 
 
-async def validate_values_payload(payload: dict):
+async def validate_values_payload(payload: dict) -> dict:
     clean_dict = await clean_none_values_dict(payload)
     if len(clean_dict.keys()) == 0:
         raise HTTPException(

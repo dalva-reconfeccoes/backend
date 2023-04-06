@@ -1,21 +1,14 @@
-from fastapi import HTTPException
-
-from app.application.domain.client.schemas import GetClientSchema
-from app.application.enums.messages_enum import MessagesEnum
-from app.infra.database.repositories.client import repository
+from app.application.domain.client.schemas.filter_client import FilterClientSchema
+from app.application.domain.client.usecase.base_client import BaseClientUseCase
+from app.application.helpers.utils import validate_values_payload
 
 
-class GetClientUseCase:
-    def __init__(self, uuid: str):
-        self._uuid = uuid
-        self._repository = repository.ClientRepository()
-
-    async def _validate(self):
-        client = await self._repository.get_or_none(uuid=self._uuid)
-        if not client:
-            raise HTTPException(status_code=400, detail=MessagesEnum.CLIENT_NOT_FOUND)
-        return client
+class GetClientUseCase(BaseClientUseCase):
+    def __init__(self, payload: FilterClientSchema):
+        super().__init__(payload)
+        self._payload = payload
 
     async def execute(self):
-        client = await self._validate()
-        return GetClientSchema.from_orm(client)
+        data = await validate_values_payload(self._payload.dict())
+        client = await self._validate_db(**data)
+        return await self._serializer(client)

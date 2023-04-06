@@ -1,13 +1,9 @@
-from app.application.domain.client.schemas import GetClientSchema
-from app.infra.database.repositories.client import repository
+from app.application.domain.client.usecase.base_client import BaseClientUseCase
 
 
-class GetClientsUseCase:
-    def __init__(self):
-        self._repository = repository.ClientRepository()
-
-    async def _serializer(self, client):
-        return GetClientSchema.from_orm(client)
+class GetClientsUseCase(BaseClientUseCase):
+    def __init__(self, payload=None):
+        super().__init__(payload)
 
     async def execute(self):
         clients = await self._repository.get_all()

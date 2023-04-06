@@ -14,3 +14,4 @@ class MessagesEnum(str, Enum):
     VERIFICATION_SENT = "Verification code sent successfully"
     EXPIRED_VERIFICATION_CODE = "Your Code has expired. Request to send a new code."
     INVALID_VERIFICATION_CODE = "Code invalid."
+    UPDATED_PASSWORD = "Updated password."
