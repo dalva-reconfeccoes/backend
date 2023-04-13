@@ -10,9 +10,11 @@ async def init_routers(app: FastAPI):
     :return:
     """
     from app.application.domain.client import router as client_router
+    from app.application.domain.product import router as product_router
     from app.application.routes import healthcheck_router
 
     app.include_router(healthcheck_router.router)
     app.include_router(client_router.router, prefix="/api/clients", tags=["Client"])
+    app.include_router(product_router.router, prefix="/api/products", tags=["Product"])
 
     add_pagination(app)

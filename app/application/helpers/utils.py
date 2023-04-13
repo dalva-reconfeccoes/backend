@@ -89,7 +89,8 @@ async def validate_values_payload(payload: dict) -> dict:
     return clean_dict
 
 
-def format_client_name(name):
+def format_name(name: str):
+    name = name.upper()
     names = name.split()
     format_names = [f"{name[:1]}{name[1:].lower()}" for name in names]
     return " ".join(format_names)

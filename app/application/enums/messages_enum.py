@@ -6,6 +6,8 @@ class MessagesEnum(str, Enum):
     Enum for messages sent by the server.
     """
 
+    PRODUCT_NOT_FOUND = "Product not found"
+    PRODUCT_ALREADY_EXIST = "Product already exists"
     CLIENT_NOT_FOUND = "Client not found"
     INVALID_PASSWORD = "Invalid password"
     CLIENT_NOT_UPDATED = "Client not updated"

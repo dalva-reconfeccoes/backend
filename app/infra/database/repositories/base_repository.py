@@ -10,11 +10,8 @@ class BaseRepository:
         return await self.entity.create(**payload)
 
     async def update(self, payload: dict, _id: int) -> bool:
-        try:
-            await self.entity.filter(id=_id).update(**payload)
-            return True
-        except BaseORMException:
-            return False
+        await self.entity.filter(id=_id).update(**payload)
+        return await self.get_by_id(_id)
 
     async def get_all(self) -> list:
         return await self.entity.all()

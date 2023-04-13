@@ -20,7 +20,7 @@ class BaseClientUseCase:
             )
         return client
 
-    async def _filter_db(self, **kwargs) -> Client:
+    async def _validate_already_existing_db(self, **kwargs) -> Client:
         client = await self._repository.get_or_none(**kwargs)
         if client:
             raise HTTPException(
