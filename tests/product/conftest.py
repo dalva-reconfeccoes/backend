@@ -1,5 +1,5 @@
 from uuid import uuid4
-
+from fastapi import status
 import pytest
 from faker import Factory
 
@@ -27,3 +27,10 @@ def product_fake_dict():
         "status": ProductStatusEnum.AVAILABLE,
         "is_active": True,
     }
+
+
+@pytest.fixture(scope="module")
+def product_created(test_app_with_db, product_fake_dict):
+    response = test_app_with_db.post("/api/products/", json=product_fake_dict)
+    assert response.status_code == status.HTTP_201_CREATED
+    return response.json()

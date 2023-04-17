@@ -1,10 +1,12 @@
 from fastapi import APIRouter, status, Depends
 from fastapi_pagination import Page, paginate
 
+from app.application.domain.product.schemas.filter_product import FilterProductSchema
 from app.application.domain.product.schemas.get_product import GetProductSchema
 from app.application.domain.product.schemas.post_product import PostProductSchema
 from app.application.domain.product.usecase.create_product import CreateProductUseCase
 from app.application.domain.product.usecase.get_all_products import GetAllProductUseCase
+from app.application.domain.product.usecase.get_product import GetProductUseCase
 from app.infra.jwt.jwt_bearer import JWTBearer
 from app.infra.settings import get_settings
 
@@ -33,3 +35,15 @@ async def register_product(payload: PostProductSchema):
 async def get_products():
     products = await GetAllProductUseCase().execute()
     return paginate(products)
+
+
+@router.get(
+    "/{uuid}",
+    description="Router to one product by uuid",
+    response_model=GetProductSchema,
+    status_code=status.HTTP_200_OK,
+    dependencies=[Depends(JWTBearer())],
+)
+async def get_client(uuid: str):
+    payload = FilterProductSchema(uuid=uuid)
+    return await GetProductUseCase(payload).execute()

@@ -1,6 +1,3 @@
-import json
-
-import pytest
 from fastapi import status
 
 END_POINT = "/api/clients/"
@@ -24,7 +21,6 @@ def test_router_get_client_should_be_return_200_when_post_client(
     test_app_with_db, client_created, access_token
 ):
     response = test_app_with_db.get(f"{END_POINT}{client_created.get('uuid')}")
-    print(response.text)
     assert response.status_code == status.HTTP_200_OK
 
 

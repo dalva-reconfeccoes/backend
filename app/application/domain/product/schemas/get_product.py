@@ -11,6 +11,7 @@ from app.application.enums.product.product_type import ProductTypeEnum
 
 class GetProductSchema(CamelModel):
     id: int
+    uuid: str
     header: str
     color: str
     knitted: str
