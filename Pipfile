@@ -23,6 +23,7 @@ mypy = "*"
 aiomysql = "*"
 httpx = "*"
 arrow = "*"
+minio = "*"
 
 [dev-packages]
 autoflake = "*"
