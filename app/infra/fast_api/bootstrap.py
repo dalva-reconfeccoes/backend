@@ -15,5 +15,4 @@ def create_app() -> FastAPI:
         root_path=settings.ROOT_PATH,
     )
     init_middlewares(application)
-
     return application

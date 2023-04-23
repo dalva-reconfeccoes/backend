@@ -19,6 +19,6 @@ class CreateProductUseCase(BaseProductUseCase):
         return product
 
     async def execute(self):
-        await self._validate_already_existing_db(header=self._payload.header)
+        await self._validate_already_exists_db(header=self._payload.header)
         product = await self._create_product_db()
         return await self._serializer(product)

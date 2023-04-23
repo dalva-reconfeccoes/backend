@@ -1,6 +1,7 @@
 import logging
 
 from fastapi import FastAPI
+from loguru import logger
 from tortoise import Tortoise
 from tortoise.contrib.starlette import register_tortoise
 
@@ -8,7 +9,6 @@ from app.infra.settings import get_settings
 
 settings = get_settings()
 
-log = logging.getLogger("uvicorn")
 
 """ This config is for generate migrations.bkp by aerich """
 TORTOISE_ORM = {
@@ -33,7 +33,7 @@ def init_db(app: FastAPI):
 
 
 async def connect_to_database() -> None:
-    log.info("Initialize Tortoise...")
+    logger.info("Initialize Tortoise...")
     await Tortoise.init(
         db_url=settings.DB_URL,
         modules={"models": settings.MODELS},
@@ -41,5 +41,5 @@ async def connect_to_database() -> None:
 
 
 async def close_connection_database() -> None:
-    log.info("Closing Tortoise...")
+    logger.info("Closing Tortoise...")
     await Tortoise.close_connections()

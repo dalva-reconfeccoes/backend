@@ -1,4 +1,11 @@
-from tortoise.fields import IntField, CharField, FloatField, CharEnumField, BooleanField
+from tortoise.fields import (
+    IntField,
+    CharField,
+    FloatField,
+    CharEnumField,
+    BooleanField,
+    ReverseRelation,
+)
 from app.application.enums.product.product_sex import ProductSexEnum
 from app.application.enums.product.product_status import ProductStatusEnum
 from app.application.enums.product.product_sub_type import ProductSubTypeEnum
@@ -17,9 +24,7 @@ class Product(BaseModel):
     sex = CharEnumField(ProductSexEnum)
     status = CharEnumField(ProductStatusEnum)
     is_active = BooleanField(default=True)
-
-    def __str__(self):
-        return f"{self.header}"
+    images = ReverseRelation["Image"]
 
     class Meta:
         table = "product"

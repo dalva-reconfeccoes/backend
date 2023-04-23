@@ -25,3 +25,6 @@ class BaseRepository:
             return True
         except BaseORMException:
             return False
+
+    async def get_or_none(self, **kwargs):
+        return await self.entity.get_or_none(**kwargs)

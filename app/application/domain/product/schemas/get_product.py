@@ -1,8 +1,9 @@
 from datetime import datetime
-from typing import Optional
+from typing import Optional, List
 
 from fastapi_camelcase import CamelModel
 
+from app.application.domain.image.schemas.get_image_url import GetImageUrlSchema
 from app.application.enums.product.product_sex import ProductSexEnum
 from app.application.enums.product.product_status import ProductStatusEnum
 from app.application.enums.product.product_sub_type import ProductSubTypeEnum
@@ -21,6 +22,7 @@ class GetProductSchema(CamelModel):
     sub_type: ProductSubTypeEnum
     sex: ProductSexEnum
     status: ProductStatusEnum
+    images: Optional[List[GetImageUrlSchema]]
     is_active: bool
     created_at: Optional[datetime]
     updated_at: Optional[datetime]

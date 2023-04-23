@@ -1,8 +1,8 @@
 from app.infra.database.repositories.base_repository import BaseRepository
-from app.models.product import Product
+from app.models.image import Image
 
 
-class ProductRepository(BaseRepository):
+class ImageRepository(BaseRepository):
     def __init__(self):
         super().__init__()
-        self.entity = Product
+        self.entity = Image

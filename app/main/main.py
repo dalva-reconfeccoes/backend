@@ -3,8 +3,8 @@ from loguru import logger
 from app.infra.database.db import close_connection_database, connect_to_database
 from app.infra.fast_api.bootstrap import create_app
 from app.infra.fast_api.routers import init_routers
+from app.infra.file_storage.minio import get_storage_minio
 from app.infra.jwt.jwt import exception_jwt, init_jwt
-from app.infra.middlewares.middlewares import init_middlewares
 
 app = create_app()
 
@@ -13,6 +13,13 @@ app = create_app()
 async def startup_db():
     logger.info("Starting up database...")
     await connect_to_database()
+
+
+@app.on_event("startup")
+async def startup_db():
+    logger.info("Starting up filestorage...")
+    storage = get_storage_minio()
+    await storage.create_bucket()
 
 
 @app.on_event("startup")

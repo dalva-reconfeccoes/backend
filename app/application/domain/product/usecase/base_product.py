@@ -1,32 +1,27 @@
-from fastapi import HTTPException, status
+from fastapi_camelcase import CamelModel
+from tortoise.contrib.pydantic import pydantic_model_creator
 
+from app.application.abstracts.usecase.base_usecase import BaseUseCase
 from app.application.domain.product.schemas.get_product import GetProductSchema
-from app.application.enums.messages_enum import MessagesEnum
 from app.infra.database.repositories.product.repository import ProductRepository
+from app.infra.file_storage.minio import get_storage_minio
 from app.models.product import Product
 
 
-class BaseProductUseCase:
-    def __init__(self, payload):
+class BaseProductUseCase(BaseUseCase):
+    def __init__(self, payload: CamelModel = None):
+        super().__init__("Product", payload, ProductRepository())
         self._payload = payload
-        self._repository = ProductRepository()
+        self._filestorage = get_storage_minio()
+        self._pydantic_model = pydantic_model_creator(Product)
 
-    async def _validate_db(self, **kwargs) -> Product:
-        product = await self._repository.get_or_none(**kwargs)
-        if not product:
-            raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND,
-                detail=MessagesEnum.PRODUCT_NOT_FOUND,
-            )
-        return product
+    async def _serializer(self, product: Product):
+        pyd_model = await self._pydantic_model.from_tortoise_orm(product)
+        products_schema = GetProductSchema(**pyd_model.dict())
+        return await self._set_images_url(products_schema)
 
-    async def _validate_already_existing_db(self, **kwargs):
-        product = await self._repository.get_or_none(**kwargs)
-        if product:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail=MessagesEnum.PRODUCT_ALREADY_EXIST,
-            )
-
-    async def _serializer(self, product: Product) -> GetProductSchema:
-        return GetProductSchema.from_orm(product)
+    async def _set_images_url(self, products_schema: GetProductSchema):
+        for image in products_schema.images:
+            url = await self._filestorage.get_file_url(image.filename)
+            image.url = url
+        return products_schema
