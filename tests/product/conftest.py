@@ -30,7 +30,9 @@ def product_fake_dict():
 
 
 @pytest.fixture(scope="module")
-def product_created(test_app_with_db, product_fake_dict):
-    response = test_app_with_db.post("/api/products/", json=product_fake_dict)
+def product_created(test_app_with_db, access_token, product_fake_dict):
+    response = test_app_with_db.post(
+        "/api/products/", json=product_fake_dict, headers=access_token
+    )
     assert response.status_code == status.HTTP_201_CREATED
     return response.json()

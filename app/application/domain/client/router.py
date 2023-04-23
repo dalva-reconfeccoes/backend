@@ -47,7 +47,7 @@ async def get_clients():
 
 @router.get(
     "/{uuid}",
-    description="Router to one client by id",
+    description="Router to one client by uuid",
     response_model=GetClientSchema,
     status_code=status.HTTP_200_OK,
     dependencies=[Depends(JWTBearer())],

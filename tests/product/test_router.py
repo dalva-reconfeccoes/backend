@@ -11,9 +11,11 @@ def test_router_get_products_should_be_return_200_when_get_all_products(
 
 
 def test_router_product_create_should_be_return_400_when_post_product(
-    test_app_with_db, product_fake_dict
+    test_app_with_db, access_token, product_created, product_fake_dict
 ):
-    response = test_app_with_db.post(END_POINT, json=product_fake_dict)
+    response = test_app_with_db.post(
+        END_POINT, json=product_fake_dict, headers=access_token
+    )
     assert response.status_code == status.HTTP_400_BAD_REQUEST
 
 

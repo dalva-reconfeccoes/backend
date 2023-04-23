@@ -12,9 +12,8 @@ class JWTBearer(HTTPBearer):
         super(JWTBearer, self).__init__(auto_error=auto_error)
 
     async def __call__(self, request: Request, authorization: AuthJWT = Depends()):
-        if not settings.TESTING:
-            credentials: HTTPAuthorizationCredentials = await super(
-                JWTBearer, self
-            ).__call__(request)
-            authorization.jwt_required()
-            return credentials
+        credentials: HTTPAuthorizationCredentials = await super(
+            JWTBearer, self
+        ).__call__(request)
+        authorization.jwt_required()
+        return credentials

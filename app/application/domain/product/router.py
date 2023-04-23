@@ -35,7 +35,6 @@ async def register_product(payload: PostProductSchema):
     description="Router to get all registered products",
     response_model=Page[GetProductSchema],
     status_code=status.HTTP_200_OK,
-    dependencies=[Depends(JWTBearer())],
 )
 async def get_products():
     products = await GetAllProductUseCase().execute()
@@ -47,7 +46,6 @@ async def get_products():
     description="Router to one product by uuid",
     response_model=GetProductSchema,
     status_code=status.HTTP_200_OK,
-    dependencies=[Depends(JWTBearer())],
 )
 async def get_client(uuid: str):
     payload = FilterProductSchema(uuid=uuid)

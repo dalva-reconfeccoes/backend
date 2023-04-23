@@ -15,7 +15,7 @@ fastapi-camelcase = "*"
 asyncpg = "*"
 aioredis = "*"
 loguru = "*"
-fastapi-pagination = {extras = ["tortoise"], version = "*"}
+fastapi-pagination = "*"
 passlib = "*"
 fastapi-jwt-auth = "*"
 python-multipart = "*"

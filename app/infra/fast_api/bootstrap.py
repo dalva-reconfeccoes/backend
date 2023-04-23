@@ -1,9 +1,13 @@
+import warnings
+
 from fastapi import FastAPI
+from fastapi_pagination.utils import FastAPIPaginationWarning
 
 from app.infra.middlewares.middlewares import init_middlewares
 from app.infra.settings import get_settings
 
 settings = get_settings()
+warnings.simplefilter("ignore", FastAPIPaginationWarning)
 
 
 def create_app() -> FastAPI:
