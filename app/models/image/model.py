@@ -13,4 +13,4 @@ class Image(BaseModel):
 
     class Meta:
         table = "image"
-        ordering = ["-id"]
+        ordering = ["-filename"]

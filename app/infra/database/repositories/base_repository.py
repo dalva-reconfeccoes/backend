@@ -9,7 +9,7 @@ class BaseRepository:
     async def create(self, payload: dict):
         return await self.entity.create(**payload)
 
-    async def update(self, payload: dict, _id: int) -> bool:
+    async def update(self, payload: dict, _id: int) -> Model:
         await self.entity.filter(id=_id).update(**payload)
         return await self.get_by_id(_id)
 

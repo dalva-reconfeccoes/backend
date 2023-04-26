@@ -6,7 +6,7 @@ class ProductSubTypeEnum(str, Enum):
     Enum for a product sub type.
     """
 
-    REGULAR = "Comum"
+    REGULAR = "Básica"
     POLO = "Polo"
     LONG_SLEEVE = "Manga Longa"
     TANK_TOP = "Regata"

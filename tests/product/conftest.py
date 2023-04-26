@@ -3,10 +3,11 @@ from fastapi import status
 import pytest
 from faker import Factory
 
-from app.application.enums.product.product_sex import ProductSexEnum
-from app.application.enums.product.product_status import ProductStatusEnum
-from app.application.enums.product.product_sub_type import ProductSubTypeEnum
-from app.application.enums.product.product_type import ProductTypeEnum
+from app.application.enums.product.sex import ProductSexEnum
+from app.application.enums.product.size import ProductSizeEnum
+from app.application.enums.product.status import ProductStatusEnum
+from app.application.enums.product.sub_type import ProductSubTypeEnum
+from app.application.enums.product.type import ProductTypeEnum
 
 faker = Factory.create("pt_BR")
 
@@ -20,7 +21,6 @@ def product_fake_dict():
         "color": faker.safe_color_name(),
         "knitted": faker.name(),
         "price": faker.pyfloat(min_value=30, max_value=100),
-        "quantity": faker.random_int(min=10, max=999),
         "type": ProductTypeEnum.T_SHIRT,
         "sub_type": ProductSubTypeEnum.REGULAR,
         "sex": ProductSexEnum.MALE,
@@ -36,3 +36,12 @@ def product_created(test_app_with_db, access_token, product_fake_dict):
     )
     assert response.status_code == status.HTTP_201_CREATED
     return response.json()
+
+
+@pytest.fixture()
+def new_quantity_fake_dict(product_created):
+    return {
+        "size": ProductSizeEnum.SIZE_G,
+        "available": faker.random_int(min=1, max=9999),
+        "product_id": product_created.get("id"),
+    }

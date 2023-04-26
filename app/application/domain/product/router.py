@@ -12,6 +12,12 @@ from app.application.domain.product.usecase.create_product_image import (
 )
 from app.application.domain.product.usecase.get_all_products import GetAllProductUseCase
 from app.application.domain.product.usecase.get_product import GetProductUseCase
+from app.application.domain.product.usecase.register_available_quantity import (
+    RegisterAvailableQuantity,
+)
+from app.application.domain.quantity.schemas.register_quantity import (
+    RegisterQuantitySchema,
+)
 from app.infra.jwt.jwt_bearer import JWTBearer
 from app.infra.settings import get_settings
 
@@ -64,3 +70,15 @@ async def register_product_image(
     files: List[UploadFile] = File(),
 ):
     return await RegisterProductImageUseCase(product_uuid, files).execute()
+
+
+@router.post(
+    "/quantity",
+    description="Router to register available quantity of a product",
+    response_model=Page[GetProductSchema],
+    status_code=status.HTTP_201_CREATED,
+    dependencies=[Depends(JWTBearer())],
+)
+async def available_quantity_product(payload: List[RegisterQuantitySchema]):
+    products = await RegisterAvailableQuantity(payload).execute()
+    return paginate(products)

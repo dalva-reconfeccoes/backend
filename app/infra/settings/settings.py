@@ -32,6 +32,7 @@ class Setting(BaseSettings):
         "aerich.models",
         "app.models.client",
         "app.models.product",
+        "app.models.quantity",
         "app.models.image",
     ]
 

@@ -24,3 +24,12 @@ def test_router_get_product_should_be_return_200_when_post_product(
 ):
     response = test_app_with_db.get(f"{END_POINT}{product_created.get('uuid')}")
     assert response.status_code == status.HTTP_200_OK
+
+
+def test_router_register_quantity_product_should_be_return_200_when_post_product(
+    test_app_with_db, new_quantity_fake_dict, access_token
+):
+    response = test_app_with_db.post(
+        f"{END_POINT}quantity", json=[new_quantity_fake_dict], headers=access_token
+    )
+    assert response.status_code == status.HTTP_201_CREATED
