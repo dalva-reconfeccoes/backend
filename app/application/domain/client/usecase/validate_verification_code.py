@@ -1,7 +1,9 @@
 from app.application.domain.client.schemas.verification_code import (
     VerificationCodeSchema,
 )
-from app.application.domain.client.usecase.base_client import BaseClientUseCase
+from app.application.domain.client.abstracts.base_client_usecase import (
+    BaseClientUseCase,
+)
 from app.application.enums.messages_enum import MessagesEnum
 from app.application.helpers.utils import (
     valid_verification_code,

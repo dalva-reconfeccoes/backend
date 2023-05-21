@@ -1,7 +1,9 @@
 from passlib.handlers.pbkdf2 import pbkdf2_sha256
 
 from app.application.domain.client.schemas.reset_password import ResetPasswordSchema
-from app.application.domain.client.usecase.base_client import BaseClientUseCase
+from app.application.domain.client.abstracts.base_client_usecase import (
+    BaseClientUseCase,
+)
 from app.application.enums.messages_enum import MessagesEnum
 from app.application.schemas.simple_message_schema import SimpleMessageSchema
 from app.models.client import Client

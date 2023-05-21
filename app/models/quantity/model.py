@@ -5,7 +5,7 @@ from tortoise.fields import (
 )
 
 from app.application.enums.product.size import ProductSizeEnum
-from app.models.base_model import BaseModel
+from app.application.abstracts.database.base_model import BaseModel
 
 
 class Quantity(BaseModel):

@@ -4,7 +4,9 @@ from app.application.domain.product.schemas.get_available_filter_product import 
     GetAvailableSubTypeSchema,
     GetAvailableSizeSchema,
 )
-from app.application.domain.product.usecase.base_product import BaseProductUseCase
+from app.application.domain.product.abstracts.base_product_usecase import (
+    BaseProductUseCase,
+)
 
 
 class GetAvailableFilterProductsUseCase(BaseProductUseCase):

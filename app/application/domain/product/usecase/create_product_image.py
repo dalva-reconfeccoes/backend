@@ -5,7 +5,9 @@ from loguru import logger
 
 from app.application.domain.image.schemas.register_image import RegisterImageSchema
 from app.application.domain.image.usecase.register_image import CreateImageUseCase
-from app.application.domain.product.usecase.base_product import BaseProductUseCase
+from app.application.domain.product.abstracts.base_product_usecase import (
+    BaseProductUseCase,
+)
 
 
 class RegisterProductImageUseCase(BaseProductUseCase):

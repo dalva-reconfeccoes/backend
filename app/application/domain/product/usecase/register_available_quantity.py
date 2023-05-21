@@ -1,6 +1,8 @@
 from typing import List
 
-from app.application.domain.product.usecase.base_product import BaseProductUseCase
+from app.application.domain.product.abstracts.base_product_usecase import (
+    BaseProductUseCase,
+)
 from app.application.domain.quantity.schemas.register_quantity import (
     RegisterQuantitySchema,
 )

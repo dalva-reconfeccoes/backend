@@ -1,4 +1,6 @@
-from app.application.domain.client.usecase.base_client import BaseClientUseCase
+from app.application.domain.client.abstracts.base_client_usecase import (
+    BaseClientUseCase,
+)
 
 
 class GetClientsUseCase(BaseClientUseCase):

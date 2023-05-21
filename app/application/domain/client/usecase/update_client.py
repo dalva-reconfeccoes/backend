@@ -1,10 +1,11 @@
 from fastapi import HTTPException, status
 from passlib.hash import pbkdf2_sha256
 
+from app.application.domain.client.abstracts.base_client_usecase import (
+    BaseClientUseCase,
+)
 from app.application.domain.client.schemas import GetClientSchema, UpdateClientSchema
-from app.application.domain.client.usecase.base_client import BaseClientUseCase
 from app.application.enums.messages_enum import MessagesEnum
-from app.infra.database.repositories.client import repository
 
 
 class UpdateClientUseCase(BaseClientUseCase):

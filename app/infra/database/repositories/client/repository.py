@@ -1,5 +1,5 @@
 from app.models.client import Client
-from app.infra.database.repositories.base_repository import BaseRepository
+from app.application.abstracts.database.base_repository import BaseRepository
 
 
 class ClientRepository(BaseRepository):

@@ -1,7 +1,9 @@
 from uuid import uuid4
 
 from app.application.domain.product.schemas.post_product import PostProductSchema
-from app.application.domain.product.usecase.base_product import BaseProductUseCase
+from app.application.domain.product.abstracts.base_product_usecase import (
+    BaseProductUseCase,
+)
 from app.application.helpers.utils import format_name
 from app.models.product import Product
 

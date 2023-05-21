@@ -1,12 +1,12 @@
-from fastapi import HTTPException, status
-from passlib.hash import pbkdf2_sha256
 from uuid import uuid4
 
-from app.application.domain.client.schemas import GetClientSchema, PostClientSchema
-from app.application.domain.client.usecase.base_client import BaseClientUseCase
-from app.application.enums.messages_enum import MessagesEnum
+from passlib.hash import pbkdf2_sha256
+
+from app.application.domain.client.abstracts.base_client_usecase import (
+    BaseClientUseCase,
+)
+from app.application.domain.client.schemas import PostClientSchema
 from app.application.helpers.utils import format_name
-from app.infra.database.repositories.client import repository
 
 
 class CreateClientUseCase(BaseClientUseCase):
@@ -23,6 +23,6 @@ class CreateClientUseCase(BaseClientUseCase):
         return client
 
     async def execute(self):
-        await self._validate_already_existing_db(email=self._payload.email)
+        await self._validate_already_exists_db(email=self._payload.email)
         client = await self._create_client_db()
         return await self._serializer(client)

@@ -3,9 +3,9 @@ from abc import ABCMeta
 from fastapi import HTTPException, status
 from fastapi_camelcase import CamelModel
 
-from app.application.abstracts.usecase.enum import ErrorsUseCaseEnum
+from app.application.abstracts.usecase.errors_enum import ErrorsUseCaseEnum
 from app.application.helpers.utils import clean_none_values_dict
-from app.infra.database.repositories.base_repository import BaseRepository
+from app.application.abstracts.database.base_repository import BaseRepository
 
 
 class BaseUseCase(metaclass=ABCMeta):

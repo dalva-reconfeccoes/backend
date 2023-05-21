@@ -10,7 +10,7 @@ from app.application.enums.product.sex import ProductSexEnum
 from app.application.enums.product.status import ProductStatusEnum
 from app.application.enums.product.sub_type import ProductSubTypeEnum
 from app.application.enums.product.type import ProductTypeEnum
-from app.models.base_model import BaseModel
+from app.application.abstracts.database.base_model import BaseModel
 
 
 class Product(BaseModel):

@@ -1,5 +1,7 @@
 from app.application.domain.product.schemas.get_product import GetProductSchema
-from app.application.domain.product.usecase.base_product import BaseProductUseCase
+from app.application.domain.product.abstracts.base_product_usecase import (
+    BaseProductUseCase,
+)
 
 
 class GetAllProductUseCase(BaseProductUseCase):

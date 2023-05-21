@@ -1,6 +1,6 @@
-from tortoise.fields import BooleanField, CharField, IntField, DatetimeField
+from tortoise.fields import BooleanField, CharField, DatetimeField
 
-from app.models.base_model import BaseModel
+from app.application.abstracts.database.base_model import BaseModel
 
 
 class Client(BaseModel):
