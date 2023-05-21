@@ -59,5 +59,5 @@ class MinioStorage:
 
 
 @lru_cache()
-def get_storage_minio():
+def get_minio_storage():
     return MinioStorage()

@@ -112,3 +112,16 @@ def valid_verification_code(
         )
 
     return True
+
+
+def verify_existing_keys_in_dict(payload: dict, possibles_keys: list):
+    for key in possibles_keys:
+        if key in payload.keys():
+            return True
+    return False
+
+
+def verify_value_in_dict(payload: dict, key: str, value):
+    if key in payload.keys() and value in payload[key]:
+        return True
+    return False

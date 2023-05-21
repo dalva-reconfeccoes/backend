@@ -28,3 +28,6 @@ class BaseRepository:
 
     async def get_or_none(self, **kwargs):
         return await self.entity.get_or_none(**kwargs)
+
+    async def filter(self, **kwargs):
+        return await self.entity.filter(**kwargs)

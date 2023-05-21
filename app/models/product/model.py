@@ -1,11 +1,11 @@
 from tortoise.fields import (
-    IntField,
     CharField,
     FloatField,
     CharEnumField,
     BooleanField,
     ReverseRelation,
 )
+
 from app.application.enums.product.sex import ProductSexEnum
 from app.application.enums.product.status import ProductStatusEnum
 from app.application.enums.product.sub_type import ProductSubTypeEnum
@@ -26,6 +26,12 @@ class Product(BaseModel):
     description = CharField(max_length=1000, null=True)
     images = ReverseRelation["Image"]
     quantities = ReverseRelation["Quantity"]
+
+    async def verify_available_quantity_size(self, size: str):
+        for quantity in self.quantities:
+            if quantity.size == size and quantity.available > 0:
+                return True
+        return False
 
     class Meta:
         table = "product"
