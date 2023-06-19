@@ -49,3 +49,7 @@ class BaseUseCase(metaclass=ABCMeta):
                 detail=self._errors.PARAMETERS_NOT_FOUND,
             )
         self._payload_clean = clean_dict
+
+    async def get_model(self):
+        await self._validate_values_payload()
+        return await self._validate_db(**self._payload_clean)

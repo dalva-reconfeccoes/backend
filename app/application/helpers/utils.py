@@ -1,6 +1,8 @@
 import arrow
 import pytz
+from pycorreios import Correios
 
+from app.application.enums.address.delivery_type import DeliveryTypeEnum
 from app.application.enums.messages_enum import MessagesEnum
 from fastapi import HTTPException, status
 from datetime import datetime, timedelta, timezone
@@ -125,3 +127,34 @@ def verify_value_in_dict(payload: dict, key: str, value):
     if key in payload.keys() and value in payload[key]:
         return True
     return False
+
+
+async def get_correios_delivery_code(type: DeliveryTypeEnum):
+    if type == DeliveryTypeEnum.CORREIOS_PAC:
+        return Correios.PAC
+    if type == DeliveryTypeEnum.CORREIOS_SEDEX:
+        return Correios.SEDEX
+
+
+async def calculate_from_correios(
+    correios_code: int, cep_from: str, cep_to: str, wight: float
+):
+    fields = {
+        "cod": correios_code,
+        "GOCEP": cep_to,
+        "HERECEP": cep_from,
+        "peso": wight,
+        "formato": "1",  # caixa/pacote
+        "comprimento": "18",
+        "altura": "1",
+        "largura": "13.5",
+        "diametro": "0",
+    }
+    result = Correios().frete(**fields)
+    error = result.get("MsgErro")
+    if error:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=error,
+        )
+    return result

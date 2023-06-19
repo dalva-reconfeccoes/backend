@@ -34,12 +34,16 @@ class Setting(BaseSettings):
         "app.models.product",
         "app.models.quantity",
         "app.models.image",
+        "app.models.address",
+        "app.models.cart",
+        "app.models.selected_product",
     ]
 
     MINIO_URL = config("MINIO_URL")
     MINIO_ACCESS_KEY = config("MINIO_ACCESS_KEY")
     MINIO_SECRET_KEY = config("MINIO_SECRET_KEY")
     MINIO_BUCKET_NAME = config("MINIO_BUCKET_NAME")
+    SHIPPING_POSTAL_CODE = config("SHIPPING_POSTAL_CODE")
 
 
 @lru_cache()

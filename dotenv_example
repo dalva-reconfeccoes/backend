@@ -9,6 +9,7 @@ DB_TEST_URL=sqlite://:memory:
 DB_URL=postgres://admin:admin@localhost:5432/dalvare
 GENERATE_SCHEMAS=False
 SECRET_KEY=OEYnJzsz2oMZL04CPOMUcjZmz_rpi6tQ9uJVP2RZ6bMYjufj65JNg9MSOC1OkscJ1XgT8qtaNV_hfLOQhnDOhQ
+SHIPPING_POSTAL_CODE=03971010
 
 
 # USER ADMIN

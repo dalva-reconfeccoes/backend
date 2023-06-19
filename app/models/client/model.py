@@ -1,4 +1,4 @@
-from tortoise.fields import BooleanField, CharField, DatetimeField
+from tortoise.fields import BooleanField, CharField, DatetimeField, ReverseRelation
 
 from app.application.abstracts.database.base_model import BaseModel
 
@@ -12,9 +12,7 @@ class Client(BaseModel):
     verification_code = CharField(min_length=6, max_length=6, null=True)
     expiration_code_time = DatetimeField(null=True, use_tz=True)
     email_is_verified = BooleanField(default=False)
-
-    def __str__(self):
-        return f"{self.full_name}"
+    address = ReverseRelation["Address"]
 
     class Meta:
         table = "client"

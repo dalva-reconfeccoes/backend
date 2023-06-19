@@ -1,7 +1,8 @@
 from uuid import uuid4
-from fastapi import status
+
 import pytest
 from faker import Factory
+from fastapi import status
 
 from app.application.enums.product.sex import ProductSexEnum
 from app.application.enums.product.size import ProductSizeEnum
@@ -35,13 +36,17 @@ def product_created(test_app_with_db, access_token, product_fake_dict):
         "/api/products/", json=product_fake_dict, headers=access_token
     )
     assert response.status_code == status.HTTP_201_CREATED
-    return response.json()
-
-
-@pytest.fixture()
-def new_quantity_fake_dict(product_created):
-    return {
-        "size": ProductSizeEnum.SIZE_G,
-        "available": faker.random_int(min=1, max=9999),
-        "product_id": product_created.get("id"),
-    }
+    product = response.json()
+    resp_quantity = test_app_with_db.post(
+        "/api/products/quantity",
+        json=[
+            {
+                "size": ProductSizeEnum.SIZE_G,
+                "available": faker.random_int(min=100, max=9999),
+                "product_id": product.get("id"),
+            }
+        ],
+        headers=access_token,
+    )
+    assert resp_quantity.status_code == status.HTTP_201_CREATED
+    return product

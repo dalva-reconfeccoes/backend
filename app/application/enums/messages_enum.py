@@ -7,6 +7,7 @@ class MessagesEnum(str, Enum):
     """
 
     PRODUCT_NOT_FOUND = "Product not found"
+    PRODUCT_NOT_AVAILABLE = "Product not available."
     PRODUCT_ALREADY_EXIST = "Product already exists"
     CLIENT_NOT_FOUND = "Client not found"
     INVALID_PASSWORD = "Invalid password"

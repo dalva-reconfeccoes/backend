@@ -16,7 +16,7 @@ from app.application.domain.product.usecase.create_product import CreateProductU
 from app.application.domain.product.usecase.create_product_image import (
     RegisterProductImageUseCase,
 )
-from app.application.domain.product.usecase.filter_products import (
+from app.application.domain.product.usecase.filter_available_product import (
     FilterAvailableProductUseCase,
 )
 from app.application.domain.product.usecase.get_all_products import GetAllProductUseCase
@@ -65,7 +65,7 @@ async def get_products():
     response_model=GetProductSchema,
     status_code=status.HTTP_200_OK,
 )
-async def get_client(uuid: str):
+async def get_product(uuid: str):
     payload = FilterProductSchema(uuid=uuid)
     return await GetProductUseCase(payload).execute()
 
