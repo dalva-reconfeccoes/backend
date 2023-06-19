@@ -9,6 +9,8 @@ from app.application.abstracts.database.base_repository import BaseRepository
 
 
 class BaseUseCase(metaclass=ABCMeta):
+    _payload_clean = {}
+
     def __init__(
         self,
         model_name: str,
@@ -42,11 +44,11 @@ class BaseUseCase(metaclass=ABCMeta):
         return model
 
     async def _validate_values_payload(self):
-        clean_dict = await clean_none_values_dict(self._payload.dict())
+        clean_dict = clean_none_values_dict(self._payload.dict())
         if len(clean_dict.keys()) == 0:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
-                detail=self._errors.PARAMETERS_NOT_FOUND,
+                detail=self._errors.PARAMETERS_NOT_FOUND.format(model=self._model_name),
             )
         self._payload_clean = clean_dict
 

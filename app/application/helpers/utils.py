@@ -1,16 +1,16 @@
-import arrow
-import pytz
-from pycorreios import Correios
-
-from app.application.enums.address.delivery_type import DeliveryTypeEnum
-from app.application.enums.messages_enum import MessagesEnum
-from fastapi import HTTPException, status
-from datetime import datetime, timedelta, timezone
 import base64
 import hashlib
 import os
 import re
 import uuid
+from datetime import datetime, timedelta
+
+import pytz
+from fastapi import HTTPException, status
+
+from app.application.enums.address.delivery_type import DeliveryTypeEnum
+from app.application.enums.messages_enum import MessagesEnum
+from app.infra.integrations.correios import Correios
 
 
 def md5(value: str):
@@ -66,7 +66,7 @@ def is_valid_ip_address(ip_address: str) -> bool:
     return regex.match(ip_address) is not None
 
 
-async def clean_none_values_dict(kargs: dict) -> dict:
+def clean_none_values_dict(kargs: dict) -> dict:
     cp_dict = kargs.copy()
     for key, value in kargs.items():
         if not value:
@@ -79,16 +79,6 @@ def generate_verification_code():
     datetime_now = pytz.UTC.localize(datetime.now())
     datetime_expiration = datetime_now + timedelta(minutes=5)
     return code, datetime_expiration
-
-
-async def validate_values_payload(payload: dict) -> dict:
-    clean_dict = await clean_none_values_dict(payload)
-    if len(clean_dict.keys()) == 0:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail=MessagesEnum.PARAMETERS_NOT_FOUND,
-        )
-    return clean_dict
 
 
 def format_name(name: str):

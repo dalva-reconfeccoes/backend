@@ -1,8 +1,6 @@
 from datetime import datetime, timedelta
 
 import pytz
-from fastapi import status, HTTPException
-from pycorreios import Correios
 
 from app.application.domain.address.abstracts.base_address_usecase import (
     BaseAddressUseCase,

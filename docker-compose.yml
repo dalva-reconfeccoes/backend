@@ -26,8 +26,13 @@ services:
 
   service:
     build: ./
+    command: pytest
     ports:
       - 8000:8000
+    environment:
+      DB_URL: postgres://admin:admin@db:5432/dalvare
+      MINIO_URL: minio:9000
+
     volumes:
       - ./:/code
     depends_on:

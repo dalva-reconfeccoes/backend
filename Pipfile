@@ -24,6 +24,8 @@ aiomysql = "*"
 httpx = "*"
 arrow = "*"
 minio = "*"
+beautifulsoup4 = "*"
+unicode = "*"
 
 [dev-packages]
 autoflake = "*"

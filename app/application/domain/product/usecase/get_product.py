@@ -1,8 +1,7 @@
-from app.application.domain.product.schemas.filter_product import FilterProductSchema
 from app.application.domain.product.abstracts.base_product_usecase import (
     BaseProductUseCase,
 )
-from app.application.helpers.utils import validate_values_payload
+from app.application.domain.product.schemas.filter_product import FilterProductSchema
 
 
 class GetProductUseCase(BaseProductUseCase):
@@ -10,6 +9,6 @@ class GetProductUseCase(BaseProductUseCase):
         super().__init__(payload)
 
     async def execute(self):
-        data = await validate_values_payload(self._payload.dict())
-        product = await self._validate_db(**data)
+        await self._validate_values_payload()
+        product = await self._validate_db(**self._payload_clean)
         return await self._serializer(product)

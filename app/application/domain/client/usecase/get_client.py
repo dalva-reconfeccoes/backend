@@ -1,8 +1,7 @@
-from app.application.domain.client.schemas.filter_client import FilterClientSchema
 from app.application.domain.client.abstracts.base_client_usecase import (
     BaseClientUseCase,
 )
-from app.application.helpers.utils import validate_values_payload
+from app.application.domain.client.schemas.filter_client import FilterClientSchema
 
 
 class GetClientUseCase(BaseClientUseCase):
@@ -11,6 +10,6 @@ class GetClientUseCase(BaseClientUseCase):
         self._payload = payload
 
     async def execute(self):
-        data = await validate_values_payload(self._payload.dict())
-        client = await self._validate_db(**data)
+        await self._validate_values_payload()
+        client = await self._validate_db(**self._payload_clean)
         return await self._serializer(client)
